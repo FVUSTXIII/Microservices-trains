@@ -25,8 +25,8 @@ public class TrainController {
 			@RequestParam(defaultValue = "0")Integer pageNo,
 			@RequestParam(defaultValue = "5")Integer pageSize,
 			@RequestBody TripRequestDTO tripRequestDTO) {
-		TripResponseDTO storeResponseDto =  trainService.getTripsDetails(tripRequestDTO, pageNo, pageSize);
-		return new ResponseEntity<TripResponseDTO>(storeResponseDto, HttpStatus.OK);
+		TripResponseDTO tripResponseDto =  trainService.getTripsDetails(tripRequestDTO, pageNo, pageSize);
+		return new ResponseEntity<TripResponseDTO>(tripResponseDto, HttpStatus.OK);
 	}
 
 }

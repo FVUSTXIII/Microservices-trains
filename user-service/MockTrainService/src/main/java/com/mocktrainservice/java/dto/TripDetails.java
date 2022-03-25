@@ -9,7 +9,9 @@ public class TripDetails {
 
 	private Integer tripId;
 	private String trainName;
-	private Optional<Route> route;
+	private Optional<Route> route; //Just in case is necessary
+	private String source;
+	private String destination;
 	private LocalDate tripDate;
 	private Double tripCost;
 	
@@ -43,6 +45,19 @@ public class TripDetails {
 	public void setTripCost(Double tripCost) {
 		this.tripCost = tripCost;
 	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
+	public String getDestination() {
+		return destination;
+	}
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+	
 	
 	
 }

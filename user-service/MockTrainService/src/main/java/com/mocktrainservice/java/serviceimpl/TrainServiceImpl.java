@@ -39,21 +39,17 @@ public class TrainServiceImpl implements TrainService {
 		
 		Pageable paging = PageRequest.of(pageNo, pageSize);
 		List<Route> routeList =  routeRepository.findBySourceAndDestination(tripRequestDTO.getSource(), tripRequestDTO.getDestination());
-		List<Integer> routesId = new ArrayList<>();
 		//añadir excepción si no hay rutas disponibles
+		System.out.println(routeList.get(0).getSource());
+
 		
-		for(Route routes : routeList)
-		{
-			routesId.add(routes.getRouteId());
-		}
-		List<Trips> tripsList = new ArrayList<>();
-		for(int x = 0; x < routesId.size()-1; x++)
-		{
-			 tripsList.add(tripRepository.findByTripDateAndRouteId(tripRequestDTO.getDate(),routesId.get(x)));
-		}
+
+		System.out.println(tripRequestDTO.getDate());
+		List<Trips> tripsList = tripRepository.findByTripDateAndRouteId(tripRequestDTO.getDate(), routeList.get(0).getRouteId());
+
 		//añadir excepción cuando no hay viajes disponibles en esas fechas
-		Page<Trips> pageList = new PageImpl<Trips>(tripsList,paging, tripsList.size());
 		
+		Page<Trips> pageList = new PageImpl<Trips>(tripsList,paging, tripsList.size());
 		List<Trips> tripsFinalList = pageList.getContent();
 		List<TripDetails> tripsDetails = new ArrayList<>();
 		
@@ -62,9 +58,11 @@ public class TrainServiceImpl implements TrainService {
 			TripDetails tripDetails = new TripDetails();
 			tripDetails.setTripId(trips.getTripId());
 			tripDetails.setTripDate(trips.getTripDate());
-			if(routesId.contains(trips.getRouteId()))
+			if(routeList.get(0).getRouteId().equals(trips.getRouteId()))
 			{
 				tripDetails.setRoute(routeRepository.findById(trips.getRouteId()));
+				tripDetails.setSource(routeRepository.findById(trips.getRouteId()).get().getSource());
+				tripDetails.setDestination(routeRepository.findById(trips.getRouteId()).get().getDestination());
 			}
 			tripDetails.setTrainName(trainRepository.findById(trips.getTrainId()).get().getTrainName());
 			tripDetails.setTripCost(trips.getTripCost());
