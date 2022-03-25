@@ -28,8 +28,6 @@ public class TrainServiceImpl implements TrainService{
 		Pageable paging = PageRequest.of(pageNo, pageSize);
 		Page<Train> trainPage = trainRepository.findAll(paging);
 		List<Train> trainList = trainPage.getContent();
-		//List<Store> storeList = storeRepository.findAll(paging).getContent();
-		//System.out.println(storeRepository.findAll(paging).getContent().get(0).getProduct().get(0).getProductName());
 		
 		List<TrainDetails> trainDetailsList = trainList.stream()
 				.map(train -> {
@@ -43,7 +41,6 @@ public class TrainServiceImpl implements TrainService{
 		trainResponseDto.setResponseDTO(responseDTO);
 		return trainResponseDto;
 	}
-
-
+	
 
 }
