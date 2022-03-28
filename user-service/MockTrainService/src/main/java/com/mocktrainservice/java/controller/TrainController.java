@@ -1,9 +1,10 @@
 package com.mocktrainservice.java.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ public class TrainController {
 	public ResponseEntity<TripResponseDTO> getAllStoreDetails(
 			@RequestParam(defaultValue = "0")Integer pageNo,
 			@RequestParam(defaultValue = "5")Integer pageSize,
-			@RequestBody TripRequestDTO tripRequestDTO) {
+			@Valid @RequestBody TripRequestDTO tripRequestDTO) {
 		TripResponseDTO tripResponseDto =  trainService.getTripsDetails(tripRequestDTO, pageNo, pageSize);
 		return new ResponseEntity<TripResponseDTO>(tripResponseDto, HttpStatus.OK);
 	}

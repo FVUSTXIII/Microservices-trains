@@ -1,9 +1,9 @@
-package com.userservice.java.exception;
+package com.mocktrainservice.java.exception;
 
 import java.time.LocalDateTime;
 
 public class ErrorResponse {
-	
+
 	private String message;
 	private String statusCode;
 	private LocalDateTime dateTime;
@@ -33,4 +33,5 @@ public class ErrorResponse {
 		this.message = message;
 		this.statusCode = argumentNotFound;
 	}
+	
 }

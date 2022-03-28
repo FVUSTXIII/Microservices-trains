@@ -1,4 +1,4 @@
-package com.userservice.java.exception;
+package com.mocktrainservice.java.exception;
 
 import java.time.LocalDateTime;
 
@@ -8,21 +8,28 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.userservice.java.constants.ApiConstants;
-
+import com.mocktrainservice.java.constants.ApiConstants;
 
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleException(UserNotFoundException ex)
+	
+	@ExceptionHandler(RouteNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleException(RouteNotFoundException ex)
 	{
-		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ApiConstants.USER_NOT_FOUND);
+		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ApiConstants.ROUTE_NOT_FOUND);
 		errorResponse.setDateTime(LocalDateTime.now());
 		return new ResponseEntity <ErrorResponse>(errorResponse, HttpStatus.OK);
 	}
 	
+	@ExceptionHandler(TripsNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleException(TripsNotFoundException ex)
+	{
+		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), ApiConstants.TRIP_NOT_FOUND);
+		errorResponse.setDateTime(LocalDateTime.now());
+		return new ResponseEntity <ErrorResponse>(errorResponse, HttpStatus.OK);
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity <ValidationErrorResponse> handleException(MethodArgumentNotValidException ex)
 	{
