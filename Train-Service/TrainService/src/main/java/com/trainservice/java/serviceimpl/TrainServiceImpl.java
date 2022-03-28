@@ -30,9 +30,6 @@ public class TrainServiceImpl implements TrainService{
 
 	@Override
 	public TrainResponseDTO getAllTrainsDetails(Integer pageNo, Integer pageSize) {
-		//List<Train> listaTrenes = new ArrayList<>();
-		//page 
-		
 		Pageable paging = PageRequest.of(pageNo, pageSize);
 		Page<Train> trainPage = trainRepository.findAll(paging);
 		List<Train> trainList = trainPage.getContent();
