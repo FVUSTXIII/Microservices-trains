@@ -32,5 +32,8 @@ public class TicketController {
 		response.setResponseDTO(temp_response);
 		return new ResponseEntity<TripBookedResponseDTO>(response, HttpStatus.ACCEPTED);
 	}
+	/*
+	@GetMapping("/users/{userId}/tickets")
+	public*/ 
 	
 }
