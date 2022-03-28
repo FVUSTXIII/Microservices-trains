@@ -10,7 +10,7 @@ public class TripRequestDTO {
 	private String source;
 	@NotEmpty(message = "Destination should not be empty")
 	private String destination;
-	@NotEmpty(message = "Date should not be empty")
+	//@NotEmpty(message = "Date should not be empty")
 	private LocalDate date;
 	
 	public String getSource() {

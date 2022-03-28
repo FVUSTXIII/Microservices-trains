@@ -47,7 +47,8 @@ public class TrainServiceImpl implements TrainService {
 			throw new RouteNotFoundException("We can not found any route with the given source: "+tripRequestDTO.getSource()+" and destination: "+tripRequestDTO.getDestination());
 		}
 
-		List<Trips> tripsList = tripRepository.findByTripDateAndRouteId(tripRequestDTO.getDate(), routes.getRouteId());
+		Page<Trips> tripsList = tripRepository.findByTripDateAndRouteId(tripRequestDTO.getDate(), routes.getRouteId(),paging);
+		List<Trips> tripsFinalList = tripsList.getContent();
 
 		if(tripsList.isEmpty())
 		{
@@ -55,8 +56,8 @@ public class TrainServiceImpl implements TrainService {
 												+tripRequestDTO.getDestination()+" in the given date: "+tripRequestDTO.getDate()+" try another date!");
 		}
 		
-		Page<Trips> pageList = new PageImpl<Trips>(tripsList,paging, tripsList.size());
-		List<Trips> tripsFinalList = pageList.getContent();
+		//Page<Trips> pageList = new PageImpl<Trips>(tripsList,paging, tripsList.size());
+
 		List<TripDetails> tripsDetails = new ArrayList<>();
 		
 		for(Trips trips : tripsFinalList)
