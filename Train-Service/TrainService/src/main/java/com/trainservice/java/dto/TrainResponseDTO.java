@@ -8,6 +8,7 @@ import java.util.List;
 public class TrainResponseDTO {
 	private List<TrainDetails> trainList = new ArrayList<>();
 	private ResponseDTO responseDTO;
+	
 	public List<TrainDetails> getTrainList() {
 		return trainList;
 	}
@@ -20,11 +21,6 @@ public class TrainResponseDTO {
 	public void setResponseDTO(ResponseDTO responseDTO) {
 		this.responseDTO = responseDTO;
 	}
-	
-
-	
-	
-	
-	
+		
 
 }
