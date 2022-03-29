@@ -5,13 +5,13 @@ import java.util.List;
 
 public class TrainAllResponseDTO {
 	
-	private List<TrainAllDetails> trainAllDetailsList = new ArrayList<>();
+	private TrainAllDetails trainAllDetails = new TrainAllDetails();
 	private ResponseDTO responseDTO;
-	public List<TrainAllDetails> getTrainAllDetailsList() {
-		return trainAllDetailsList;
+	public TrainAllDetails getTrainAllDetails() {
+		return trainAllDetails;
 	}
-	public void setTrainAllDetailsList(List<TrainAllDetails> trainAllDetailsList) {
-		this.trainAllDetailsList = trainAllDetailsList;
+	public void setTrainAllDetails(TrainAllDetails trainAllDetails) {
+		this.trainAllDetails = trainAllDetails;
 	}
 	public ResponseDTO getResponseDTO() {
 		return responseDTO;
@@ -19,8 +19,6 @@ public class TrainAllResponseDTO {
 	public void setResponseDTO(ResponseDTO responseDTO) {
 		this.responseDTO = responseDTO;
 	}
-	
-	
 	
 
 }

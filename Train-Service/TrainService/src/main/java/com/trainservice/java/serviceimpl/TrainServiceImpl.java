@@ -17,13 +17,30 @@ import com.trainservice.java.dto.TrainAllDetails;
 import com.trainservice.java.dto.TrainAllResponseDTO;
 import com.trainservice.java.dto.TrainDetails;
 import com.trainservice.java.dto.TrainResponseDTO;
+import com.trainservice.java.dto.TripDetails;
+import com.trainservice.java.dto.TripRequestDTO;
+import com.trainservice.java.dto.TripResponseDTO;
+import com.trainservice.java.entity.Route;
 import com.trainservice.java.entity.Train;
+import com.trainservice.java.entity.Trips;
+import com.trainservice.java.exception.RouteNotFoundException;
+import com.trainservice.java.exception.TrainEmptyException;
 import com.trainservice.java.exception.TrainListEmptyException;
+import com.trainservice.java.exception.TripsNotFoundException;
+import com.trainservice.java.repository.RouteRepository;
 import com.trainservice.java.repository.TrainRepository;
+import com.trainservice.java.repository.TripRepository;
 import com.trainservice.java.service.TrainService;
 
 @Service
 public class TrainServiceImpl implements TrainService{
+	
+	@Autowired
+	TripRepository tripRepository;
+	
+	
+	@Autowired
+	RouteRepository routeRepository;
 	
 	@Autowired
 	TrainRepository trainRepository;
@@ -54,14 +71,63 @@ public class TrainServiceImpl implements TrainService{
 	@Override
 	public TrainAllResponseDTO getTrainAllDetails(Integer trainId) {
 		Optional<Train> train = trainRepository.findById(trainId);
-		List<TrainAllDetails> trainAllDetails = new ArrayList<>();
-		//TrainAllDetails trainAllDetails = new TrainAllDetails();
-		BeanUtils.copyProperties(train, trainAllDetails);
+		if (train.isEmpty()) {
+			throw new TrainEmptyException("There are no trains for the ID="+trainId);	
+		}
+		
+		TrainAllDetails trainAllDetails = new TrainAllDetails();
+		trainAllDetails.setTrainName(train.get().getTrainName());
+		trainAllDetails.setCapacity(train.get().getCapacity());
+		trainAllDetails.setTrainScore(train.get().getTrainScore());
+		trainAllDetails.setTrainType(train.get().getTrainType());
 		ResponseDTO responseDTO = new ResponseDTO("Train Information Fetched Successfully", 200);
 		TrainAllResponseDTO trainAllResponseDTO = new TrainAllResponseDTO();
-		trainAllResponseDTO.setTrainAllDetailsList(trainAllDetails);
+		trainAllResponseDTO.setTrainAllDetails(trainAllDetails);
 		trainAllResponseDTO.setResponseDTO(responseDTO);
 		return trainAllResponseDTO;
+	}
+	
+
+	@Override
+	public TripResponseDTO getTripsDetails(TripRequestDTO tripRequestDTO, Integer pageNo, Integer pageSize) {
+
+		Pageable paging = PageRequest.of(pageNo, pageSize);
+		Route routes =  routeRepository.findBySourceAndDestination(tripRequestDTO.getSource(), tripRequestDTO.getDestination());
+
+
+		if(routes == null)
+		{
+			throw new RouteNotFoundException("We can not found any route with the given source: "+tripRequestDTO.getSource()+" and destination: "+tripRequestDTO.getDestination());
+		}
+
+		Page<Trips> tripsList = tripRepository.findByTripDateAndRouteId(tripRequestDTO.getDate(), routes.getRouteId(),paging);
+		List<Trips> tripsFinalList = tripsList.getContent();
+
+		if(tripsList.isEmpty())
+		{
+			throw new TripsNotFoundException("We can not found any trip with the given source:"+tripRequestDTO.getSource()+" and destination: "
+												+tripRequestDTO.getDestination()+" in the given date: "+tripRequestDTO.getDate()+" try another date!");
+		}
+
+		List<TripDetails> tripsDetails = new ArrayList<>();
+		
+		for(Trips trips : tripsFinalList)
+		{
+			TripDetails tripDetails = new TripDetails();
+			tripDetails.setTripId(trips.getTripId());
+			tripDetails.setTripDate(trips.getTripDate());
+			tripDetails.setRoute(routeRepository.findById(trips.getRouteId()));
+			tripDetails.setSource(routeRepository.findById(trips.getRouteId()).get().getSource());
+			tripDetails.setDestination(routeRepository.findById(trips.getRouteId()).get().getDestination());
+			tripDetails.setTrainName(trainRepository.findById(trips.getTrainId()).get().getTrainName());
+			tripDetails.setTripCost(trips.getTripCost());
+			tripsDetails.add(tripDetails);
+		}
+		ResponseDTO responseDTO = new ResponseDTO("Trips for the given source, destination and date, Fetch Success", 200);
+		TripResponseDTO tripResponseDto = new TripResponseDTO();
+		tripResponseDto.setTripDetails(tripsDetails);
+		tripResponseDto.setResponseDTO(responseDTO);
+		return tripResponseDto;
 	}
 
 	

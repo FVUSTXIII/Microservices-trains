@@ -8,14 +8,7 @@ public class TrainAllDetails {
 	private Integer capacity;
 	private Double trainType;
 	private Double trainScore;
-	private ResponseDTO responseDTO;
-	
-	public ResponseDTO getResponseDTO() {
-		return responseDTO;
-	}
-	public void setResponseDTO(ResponseDTO responseDTO) {
-		this.responseDTO = responseDTO;
-	}
+
 
 	public String getTrainName() {
 		return trainName;

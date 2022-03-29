@@ -11,7 +11,7 @@ import com.trainservice.java.entity.Train;
 @Repository
 public interface TrainRepository extends JpaRepository<Train, Integer>{
 
-	List<TrainAllDetails> findByTrainId(Integer trainId);
+	TrainAllDetails findByTrainId(Integer trainId);
 	
 	
 	
