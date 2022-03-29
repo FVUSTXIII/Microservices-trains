@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ticketservice.java.Client.TrainClient;
@@ -32,8 +34,14 @@ public class TicketController {
 		response.setResponseDTO(temp_response);
 		return new ResponseEntity<TripBookedResponseDTO>(response, HttpStatus.ACCEPTED);
 	}
-	/*
+	
 	@GetMapping("/users/{userId}/tickets")
-	public*/ 
+	public ResponseEntity<TicketListDTO> getTicketsByUser(
+			@RequestParam(defaultValue = "0")Integer pageNo,
+			@RequestParam(defaultValue = "5")Integer pageSize,
+			@PathVariable("userId") Integer userId) {
+		TicketListDTO ticketlistDTO = ticketService.getTicketsByUser(userId, pageNo, pageSize);
+		return null;
+	} 
 	
 }

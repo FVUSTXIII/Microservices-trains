@@ -1,5 +1,8 @@
 package com.ticketservice.java.Client;
 
-public interface TrainClient {
+import org.springframework.cloud.openfeign.FeignClient;
 
+@FeignClient("TRAINSERVICE")
+public interface TrainClient {
+	
 }

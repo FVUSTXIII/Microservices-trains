@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.trainservice.java.dto.RouteDto;
 import com.trainservice.java.dto.TrainAllDetails;
 import com.trainservice.java.dto.TrainAllResponseDTO;
 import com.trainservice.java.dto.TrainResponseDTO;
@@ -41,6 +42,11 @@ public class TrainController {
 		TrainAllResponseDTO trainAllDetails = trainService.getTrainAllDetails(trainId);
 		//System.out.println("jgvhblkjbkjhkn"+trainAllDetails.getResponseDTO());
 		return new ResponseEntity<TrainAllResponseDTO>(trainAllDetails, HttpStatus.OK);
+	}
+	
+	@GetMapping("/train/trip/{tripId}/route")
+	public RouteDto getRoute(@PathVariable("tripId") Integer tripId) {
+		return trainService.getRoute(tripId);
 	}
 	
 }

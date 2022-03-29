@@ -14,7 +14,4 @@ public interface TrainRepository extends JpaRepository<Train, Integer>{
 	List<TrainAllDetails> findByTrainId(Integer trainId);
 	
 	
-	
-	
-
 }

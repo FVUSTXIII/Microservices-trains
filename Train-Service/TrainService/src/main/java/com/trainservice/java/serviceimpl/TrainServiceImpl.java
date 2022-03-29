@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.trainservice.java.dto.ResponseDTO;
+import com.trainservice.java.dto.RouteDto;
 import com.trainservice.java.dto.TrainAllDetails;
 import com.trainservice.java.dto.TrainAllResponseDTO;
 import com.trainservice.java.dto.TrainDetails;
@@ -62,6 +63,12 @@ public class TrainServiceImpl implements TrainService{
 		trainAllResponseDTO.setTrainAllDetailsList(trainAllDetails);
 		trainAllResponseDTO.setResponseDTO(responseDTO);
 		return trainAllResponseDTO;
+	}
+
+	@Override
+	public RouteDto getRoute(Integer tripId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
