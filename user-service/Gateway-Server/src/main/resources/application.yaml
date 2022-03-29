@@ -20,4 +20,8 @@ spring:
       - id: trainservice
         uri: lb://TrainService
         predicates:
-        - Path=/trainsservice/**  
+        - Path=/trainsservice/**
+      - id: ticketservice
+        uri: lb://TicketService
+        predicates:
+        - Path=/ticketservice/** 
