@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.trainservice.java.constants.ApiConstants;
-
+import com.trainservice.java.exception.TrainEmptyException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	

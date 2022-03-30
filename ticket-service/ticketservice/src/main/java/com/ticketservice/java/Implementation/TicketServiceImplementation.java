@@ -1,14 +1,23 @@
 package com.ticketservice.java.Implementation;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ticketservice.java.Client.TrainClient;
 import com.ticketservice.java.Client.UserClient;
 import com.ticketservice.java.Controller.TicketListDTO;
+import com.ticketservice.java.Dto.ResponseDTO;
+import com.ticketservice.java.Dto.RouteDTO;
+import com.ticketservice.java.Dto.TripDTO;
 import com.ticketservice.java.Dto.TripToBookDTO;
+import com.ticketservice.java.Dto.ticketDetails;
 import com.ticketservice.java.Entity.Ticket;
 import com.ticketservice.java.Repository.TicketRepository;
 import com.ticketservice.java.Service.TicketService;
@@ -37,8 +46,26 @@ public class TicketServiceImplementation implements TicketService{
 	@Override
 	public TicketListDTO getTicketsByUser(Integer userId, Integer pageNo, Integer pageSize) {
 		// TODO Auto-generated method stub
-		return null;
+		Pageable paging = PageRequest.of(pageNo, pageSize);
+		Page<Ticket> ticket_page =  ticketRepo.findByUserId(userId, paging);
+		List<Ticket> ticket_list = ticket_page.getContent();
+		TicketListDTO respose = new TicketListDTO();
+		ticket_list.forEach(ticket -> {
+			ticketDetails newDetails = new ticketDetails();
+			newDetails.setTicketId(ticket.getTicketId());
+			newDetails.setTripId(ticket.getTripId());
+			RouteDTO route = trainClient.getRouteByTripId(ticket.getTripId());
+			newDetails.setRoute(route);
+			TripDTO trip = trainClient.getTripById(ticket.getTripId());
+			newDetails.setTripDate(trip.getTripDate().atTime(20,50));
+			newDetails.setTripCost(trip.getTripCost());
+			newDetails.setTicketDate(ticket.getDate());
+			respose.addToTicketList(newDetails);
+		});
+		respose.setResponseDTO(new ResponseDTO("Ticket list retrieved successfully", 200));
+		return respose;
 	}
+
 	
 	
 }

@@ -25,15 +25,20 @@ import com.trainservice.java.dto.RouteDto;
 import com.trainservice.java.dto.TrainAllDetails;
 import com.trainservice.java.dto.TrainAllResponseDTO;
 import com.trainservice.java.dto.TrainResponseDTO;
+import com.trainservice.java.dto.TripDto;
 import com.trainservice.java.dto.TripRequestDTO;
 import com.trainservice.java.dto.TripResponseDTO;
 import com.trainservice.java.service.TrainService;
+import com.trainservice.java.service.TripService;
 
 @RestController
 public class TrainController {
 	
 	@Autowired
 	TrainService trainService;
+	
+	@Autowired
+	TripService tripService;
 	//FALTAN LOS SERVICES Y EL REPO
 	@GetMapping("/trains")
 	public ResponseEntity<TrainResponseDTO> getAllTrainDetails(
@@ -50,11 +55,11 @@ public class TrainController {
 		return new ResponseEntity<TrainAllResponseDTO>(trainAllDetails, HttpStatus.OK);
 	}
 	
-<<<<<<< HEAD
 	@GetMapping("/train/trip/{tripId}/route")
 	public RouteDto getRoute(@PathVariable("tripId") Integer tripId) {
-		return trainService.getRoute(tripId);
-=======
+		return trainService.getRouteByTripId(tripId);
+	}
+	
 	@PostMapping("/trips")
 	public ResponseEntity<TripResponseDTO> getAllStoreDetails(
 			@RequestParam(defaultValue = "0")Integer pageNo,
@@ -62,7 +67,10 @@ public class TrainController {
 			@Valid @RequestBody TripRequestDTO tripRequestDTO) {
 		TripResponseDTO tripResponseDto =  trainService.getTripsDetails(tripRequestDTO, pageNo, pageSize);
 		return new ResponseEntity<TripResponseDTO>(tripResponseDto, HttpStatus.OK);
->>>>>>> origin/train-service
+	}
+	@GetMapping("/trips/{tripId}")
+	public TripDto getTrip(@PathVariable("tripId") Integer tripId) {
+		return tripService.getTripById(tripId);
 	}
 	
 }

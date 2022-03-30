@@ -41,7 +41,7 @@ public class TicketController {
 			@RequestParam(defaultValue = "5")Integer pageSize,
 			@PathVariable("userId") Integer userId) {
 		TicketListDTO ticketlistDTO = ticketService.getTicketsByUser(userId, pageNo, pageSize);
-		return null;
+		return new ResponseEntity<TicketListDTO>(ticketlistDTO, HttpStatus.ACCEPTED);
 	} 
 	
 }
