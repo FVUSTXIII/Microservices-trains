@@ -1,0 +1,27 @@
+server:
+  port: 9080
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+      prefer-ip-address: true
+      hostname: localhost
+spring:
+  application:
+    name: gatewayservice
+  cloud:
+    gateway: 
+      routes:
+      - id: userservice
+        uri: lb://UserService
+        predicates:
+        - Path=/usersservice/**
+      - id: trainservice
+        uri: lb://TrainService
+        predicates:
+        - Path=/trainsservice/**
+      - id: ticketservice
+        uri: lb://ticketservice
+        predicates:
+        - Path=/ticketservice/** 
