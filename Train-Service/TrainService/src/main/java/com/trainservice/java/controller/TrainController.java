@@ -73,4 +73,8 @@ public class TrainController {
 		return tripService.getTripById(tripId);
 	}
 	
+	@GetMapping("/Verify")
+	public String verify() {
+		return trainService.getConnectivityConfirmation();
+	}
 }

@@ -139,6 +139,12 @@ public class TrainServiceImpl implements TrainService{
 		return route;
 	}
 
+	@Override
+	public String getConnectivityConfirmation() {
+		// TODO Auto-generated method stub
+		return "Connection Successful";
+	}
+
 	
 	
 	

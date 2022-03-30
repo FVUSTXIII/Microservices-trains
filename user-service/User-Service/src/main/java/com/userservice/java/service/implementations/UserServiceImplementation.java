@@ -28,10 +28,9 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public UserResponseDTO loginUser(UserRequestDTO userRequestDTO) {
 		User user = userRepository.findByuserNameAndPassword(userRequestDTO.getUserName(), userRequestDTO.getPassword());
-		if(user==null)
-			{
+		if(user==null) {
 			throw new UserNotFoundException("User Not Found with the given credentials: "+userRequestDTO.getUserName()+" Password "+userRequestDTO.getPassword());
-			}
+		}
 		ResponseDTO responseDTO = new ResponseDTO("User Login Success", 200);
 		UserResponseDTO userResponseDTO = new UserResponseDTO();
 		userResponseDTO.setUserId(user.getUserId());

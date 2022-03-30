@@ -1,5 +1,5 @@
 server:
-  port: 9080
+  port: 8082
 eureka:
   client:
     serviceUrl:
@@ -14,14 +14,16 @@ spring:
     gateway: 
       routes:
       - id: userservice
-        uri: lb://UserService
+        uri: lb://userservice
         predicates:
-        - Path=/usersservice/**
+        - Path=/userservice/**
       - id: trainservice
-        uri: lb://TrainService
+        uri: lb://trainservice
         predicates:
-        - Path=/trainsservice/**
+        - Path=/trainservice/**
       - id: ticketservice
         uri: lb://ticketservice
         predicates:
         - Path=/ticketservice/** 
+    discovery:
+      enabled: true

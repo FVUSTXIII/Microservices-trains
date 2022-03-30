@@ -15,4 +15,8 @@ public interface TrainClient {
 	
 	@GetMapping("/trips/{tripId}")
 	public TripDTO getTripById(@PathVariable("tripId") Integer tripId);
+	
+	@GetMapping("/Verify")
+	public String verifyConnectivity();
 }
+

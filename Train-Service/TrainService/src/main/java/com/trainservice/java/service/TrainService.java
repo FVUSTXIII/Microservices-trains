@@ -18,6 +18,8 @@ public interface TrainService {
 	RouteDto getRouteByTripId(Integer tripId);
 	
 	TripResponseDTO getTripsDetails(TripRequestDTO tripRequestDTO, Integer pageNo, Integer pageSize);
+
+	String getConnectivityConfirmation();
 	
 	
 }
