@@ -51,7 +51,6 @@ public class TrainController {
 	@GetMapping("/trains/{trainId}")
 	public ResponseEntity<TrainAllResponseDTO> getTrainInfo(@PathVariable("trainId") Integer trainId) {
 		TrainAllResponseDTO trainAllDetails = trainService.getTrainAllDetails(trainId);
-		//System.out.println("jgvhblkjbkjhkn"+trainAllDetails.getResponseDTO());
 		return new ResponseEntity<TrainAllResponseDTO>(trainAllDetails, HttpStatus.OK);
 	}
 	
@@ -73,8 +72,10 @@ public class TrainController {
 		return tripService.getTripById(tripId);
 	}
 	
-	@GetMapping("/Verify")
+	@GetMapping("/VerifyConnection")
 	public String verify() {
-		return trainService.getConnectivityConfirmation();
+		return HttpStatus.OK.toString();
 	}
+	
+	
 }

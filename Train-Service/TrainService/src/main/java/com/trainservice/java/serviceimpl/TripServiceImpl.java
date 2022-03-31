@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.trainservice.java.dto.TripDto;
 import com.trainservice.java.entity.Trips;
+import com.trainservice.java.exception.TripsNotFoundException;
 import com.trainservice.java.repository.RouteRepository;
 import com.trainservice.java.repository.TrainRepository;
 import com.trainservice.java.repository.TripRepository;
@@ -26,7 +27,10 @@ public class TripServiceImpl implements TripService{
 	@Override
 	public TripDto getTripById(Integer tripId) {
 		TripDto tripDto = new TripDto();
-		Optional<Trips> trip = Optional.of(tripRepository.findByTripId(tripId));
+		Optional<Trips> trip = tripRepository.findById(tripId);
+		if (trip.isEmpty()) {
+			throw new TripsNotFoundException("Trip with ID: " + tripId + " not found");
+		}
 		tripDto.setTrainId(trip.get().getTrainId());
 		tripDto.setRouteId(trip.get().getRouteId());
 		Double route_price = routeRepository.findByRouteId(trip.get().getRouteId()).getRouteCost();

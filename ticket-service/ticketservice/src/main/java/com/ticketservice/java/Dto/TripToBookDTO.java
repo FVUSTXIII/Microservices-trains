@@ -1,11 +1,11 @@
 package com.ticketservice.java.Dto;
 
 import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.Min;
 public class TripToBookDTO {
-	@NotNull(message = "userId should not be null")
+	@Min(value = 1, message = "User Not Valid")
 	private Integer userId;
-	@NotNull(message = "tripId should not be null")
+	@Min(value = 1, message = "Trip Not Valid")
 	private Integer tripId;
 	
 	public Integer getUserId() {

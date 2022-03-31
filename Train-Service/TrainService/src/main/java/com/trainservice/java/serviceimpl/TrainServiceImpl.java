@@ -134,7 +134,11 @@ public class TrainServiceImpl implements TrainService{
 	@Override
 	public RouteDto getRouteByTripId(Integer tripId) {
 		// TODO Auto-generated method stub
-		Optional<Trips> trip = Optional.of(tripRepository.findByTripId(tripId));
+		Optional<Trips> trip = tripRepository.findById(tripId);
+		System.out.println("Llegamos y tenemos : " + trip);
+		if (trip.isEmpty()) {
+			throw new TripsNotFoundException("Trip with ID: " + tripId + " not found");
+		}
 		RouteDto route = routeRepository.findByRouteId(trip.get().getRouteId());
 		return route;
 	}

@@ -10,13 +10,14 @@ import com.ticketservice.java.Dto.TripDTO;
 @FeignClient("TRAINSERVICE")
 public interface TrainClient {
 	
-	@GetMapping("/train/trip/{tripId}/route")
+	@GetMapping("/trainservice/train/trip/{tripId}/route")
 	public RouteDTO getRouteByTripId(@PathVariable("tripId") Integer tripId);
 	
-	@GetMapping("/trips/{tripId}")
+	@GetMapping("/trainservice/trips/{tripId}")
 	public TripDTO getTripById(@PathVariable("tripId") Integer tripId);
 	
-	@GetMapping("/Verify")
-	public String verifyConnectivity();
+	@GetMapping("/trainservice/VerifyConnection")
+	public String verifyConnection();
+
 }
 

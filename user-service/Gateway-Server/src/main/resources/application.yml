@@ -17,7 +17,7 @@ spring:
         uri: lb://userservice
         predicates:
         - Path=/userservice/**
-      - id: trainservice
+      - id: TrainService
         uri: lb://trainservice
         predicates:
         - Path=/trainservice/**

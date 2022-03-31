@@ -3,6 +3,7 @@ package com.ticketservice.java.Exception;
 import java.time.LocalDateTime;
 
 public class ErrorResponse {
+	
 	private String message;
 	private String statusCode;
 	private LocalDateTime dateTime;
@@ -30,4 +31,7 @@ public class ErrorResponse {
 		this.statusCode = statusCode;
 	}
 	
+	
+	
+
 }

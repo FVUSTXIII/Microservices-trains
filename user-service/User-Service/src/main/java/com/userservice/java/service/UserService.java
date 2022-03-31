@@ -6,5 +6,7 @@ import com.userservice.java.dto.UserResponseDTO;
 public interface UserService {
 
 	UserResponseDTO loginUser(UserRequestDTO userRequestDTO);
+
+	String verifyExistance(Integer userId);
 	
 }

@@ -44,4 +44,10 @@ public class UserServiceImplementation implements UserService {
 		return userResponseDTO;
 	}
 
+	@Override
+	public String verifyExistance(Integer userId) {
+		// TODO Auto-generated method stub
+		return (userRepository.findById(userId).isEmpty()) ? "User Not Found" : "User Found";
+	}
+
 }

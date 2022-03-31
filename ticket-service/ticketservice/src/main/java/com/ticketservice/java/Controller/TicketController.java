@@ -20,12 +20,15 @@ import com.ticketservice.java.Dto.TripBookedResponseDTO;
 import com.ticketservice.java.Implementation.TicketServiceImplementation;
 import com.ticketservice.java.Service.TicketService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @RestController
 public class TicketController {
 	@Autowired
 	TicketService ticketService;
 	
 	@PostMapping("/tickets/book")
+	@CircuitBreaker(fallbackMethod = "serviceUnavailable", name = "TRAINSERVICE")
 	public ResponseEntity<TripBookedResponseDTO> bookTrip(@Valid @RequestBody TripToBookDTO tripToBook) {
 		Integer ticketId = ticketService.saveTicket(tripToBook);
 		TripBookedResponseDTO response = new TripBookedResponseDTO();
@@ -36,12 +39,18 @@ public class TicketController {
 	}
 	
 	@GetMapping("/users/{userId}/tickets")
+	@CircuitBreaker(fallbackMethod = "serviceUnavailable", name = "TRAINSERVICE")
 	public ResponseEntity<TicketListDTO> getTicketsByUser(
 			@RequestParam(defaultValue = "0")Integer pageNo,
 			@RequestParam(defaultValue = "5")Integer pageSize,
 			@PathVariable("userId") Integer userId) {
 		TicketListDTO ticketlistDTO = ticketService.getTicketsByUser(userId, pageNo, pageSize);
 		return new ResponseEntity<TicketListDTO>(ticketlistDTO, HttpStatus.ACCEPTED);
-	} 
+	}
+	
+	public ResponseEntity<String> serviceUnavailable(Exception e) {
+		return new ResponseEntity<String>("Service unavailable 503!!!", HttpStatus.OK);
+	}
+	
 	
 }

@@ -57,8 +57,7 @@ public class UserServiceImplTest {
 	UserActivity logg;
 	
 	@BeforeEach
-	public void setUp()
-	{
+	public void setUp() {
 		userRequestDTO = new UserRequestDTO();
 		userRequestDTO.setUserName("Weon");
 		userRequestDTO.setPassword("la wea fomme qliao");
@@ -87,18 +86,14 @@ public class UserServiceImplTest {
 	
 	@Test
 	@DisplayName("User login positive")
-	public void loginUserTest()
-	{
+	public void loginUserTest() {
 		when(userRepository.findByuserNameAndPassword("Weon","la wea fomme qliao")).thenReturn(user);
 		when(userActivityRepository.save(any(UserActivity.class))).thenReturn(logg);
-		
 		UserResponseDTO userResponseDTO = userServiceImpl.loginUser(userRequestDTO);
-		
 		assertNotNull(userResponseDTO);
 		assertEquals(1, userResponseDTO.getUserId());
 		assertEquals("User Login Success", userResponseDTO.getResponseDTO().getMessage());
 		assertEquals(200, userResponseDTO.getResponseDTO().getStatusCode());
-		
 	}
 	
 	@Test
